@@ -43,3 +43,15 @@ python -m pip install pip pip-tools rav --upgrade
 rav run win_installs
 rav run win_freeze
 ```
+
+With all the configuration done, here are the main commands you'll run:
+
+```
+rav run server
+rav run watch
+rav run vendor_pull
+```
+
+- `rav run server` maps to `python manage.py runserver` in the `src` folder
+- `rav run watch` triggers tailwind to watch the `tailwind-input.css` to output the `output.css` styles file.
+- `rav run vendor_pull`
