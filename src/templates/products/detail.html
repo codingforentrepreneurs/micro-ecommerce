@@ -30,35 +30,21 @@
 
         <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy Now</button>
 
-        <div class="grid gap-4 ">
-            <div>
-                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
+        {% if object.image %}
+            <div class="grid gap-4 ">
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ object.image.url }}" alt="">
+                </div>
+            
             </div>
-            <div class="grid grid-cols-5 gap-4">
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
-                </div>
-            </div>
-        </div>
+        {% endif %}
 
 
 
         {% if form %}
         <div>
             <h3>Update Product</h3>
-            <form method="POST" action=".">
+            <form method="POST" action="." enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
 
