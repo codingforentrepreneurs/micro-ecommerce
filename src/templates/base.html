@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% include 'base/css.html' %}
+    
+    <title>{% block head_title %}Micro eCommerce{% endblock head_title %}</title>
+
+</head>
+
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+    {% include 'base/navbar.html' %}
+
+    <div class="container mx-auto mt-4 min-h-screen">
+       
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    {% include 'base/footer.html' %}
+    {% include 'base/js.html' %}
+     
+</body>
+
+</html>

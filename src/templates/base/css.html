@@ -1,0 +1,10 @@
+{% load static %}
+
+{# COMMENT: css/output.css comes from the tailwind output #}
+<link rel="stylesheet" href="{% static 'css/output.css' %}" />
+
+
+{# COMMENT: vendor_css_files comes from cfehome.context_processors.vendor_files #}
+{% for css_file in vendor_css_files %}
+<link rel="stylesheet" href="{% static css_file %}">
+{% endfor %}

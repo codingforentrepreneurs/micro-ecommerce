@@ -1,0 +1,6 @@
+{% load static %}
+
+{# COMMENT:  vendor_js_files comes from cfehome.context_processors.vendor_files #}
+{% for js_file in vendor_js_files %}
+    <script src="{% static js_file %}" preload></script>
+{% endfor %}

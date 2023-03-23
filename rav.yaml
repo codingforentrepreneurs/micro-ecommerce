@@ -1,0 +1,20 @@
+scripts:
+  server: cd src && python manage.py runserver
+  migrate: cd src && python manage.py migrate
+  freeze: venv/bin/python -m pip freeze
+  watch: npx tailwindcss -i ./src/static/tailwind/tailwind-input.css -o ./src/static/css/output.css --watch
+  installs:
+    - venv/bin/pip-compile src/requirements/requirements.in -o src/requirements.txt
+    - venv/bin/python -m pip install -r src/requirements.txt
+    - npm install
+  win_installs:
+    - pip-compile src/requirements/requirements.in -o src/requirements.txt
+    - python -m pip install -r src/requirements.txt
+    - npm install
+  win_freeze: python -m pip freeze
+  vendor_pull:
+    - rm -rf src/static/vendor
+    - mkdir -p src/static/vendor/htmx/
+    - mkdir -p src/static/vendor/flowbite/
+    - curl -L https://unpkg.com/htmx.org@1.8.2 -o ./src/static/vendor/htmx/htmx.min.js
+    - cp ./node_modules/flowbite/dist/flowbite.min.js ./src/static/vendor/flowbite/flowbite.min.js
