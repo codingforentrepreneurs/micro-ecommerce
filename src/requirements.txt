@@ -6,9 +6,15 @@
 #
 asgiref==3.6.0
     # via django
-django==4.1.7
+dj-database-url==1.2.0
     # via -r src/requirements/requirements.in
+django==4.1.7
+    # via
+    #   -r src/requirements/requirements.in
+    #   dj-database-url
 psycopg2==2.9.5
+    # via -r src/requirements/requirements.in
+python-decouple==3.8
     # via -r src/requirements/requirements.in
 sqlparse==0.4.3
     # via django
