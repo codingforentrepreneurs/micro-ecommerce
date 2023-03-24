@@ -34,6 +34,9 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("products:detail", kwargs={"handle": self.handle})
 
+    def get_manage_url(self):
+        return reverse("products:manage", kwargs={"handle": self.handle})
+
 
 def handle_product_attachment_upload(instance, filename):
     return f"products/{instance.product.handle}/attachments/{filename}"

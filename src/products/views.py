@@ -4,7 +4,7 @@ from django.http import FileResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from .forms import ProductForm, ProductUpdateForm
+from .forms import ProductForm, ProductUpdateForm, ProductAttachmentInlineFormSet
 from .models import Product, ProductAttachment
 
 
@@ -16,7 +16,7 @@ def product_create_view(request):
         if request.user.is_authenticated:
             obj.user = request.user
             obj.save()
-            return redirect('/products/create/')
+            return redirect(obj.get_manage_url())
         form.add_error(None, "Your must be logged in to create products.")
     context['form'] = form
     return render(request, 'products/create.html', context)
@@ -29,18 +29,28 @@ def product_list_view(request):
 
 def product_manage_detail_view(request, handle=None):
     obj = get_object_or_404(Product, handle=handle)
+    attachments = ProductAttachment.objects.filter(product=obj)
     is_manager = False
     if request.user.is_authenticated:
         is_manager = obj.user == request.user
     context = {"object": obj}
-    if is_manager:
-        form = ProductUpdateForm(request.POST or None, request.FILES or None, instance=obj)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.save()
-            # return redirect('/products/create/')
-        context['form'] = form
-    return render(request, 'products/detail.html', context)
+    if not is_manager:
+        return HttpResponseBadRequest()
+    form = ProductUpdateForm(request.POST or None, request.FILES or None, instance=obj)
+    formset = ProductAttachmentInlineFormSet(request.POST or None, 
+                                             request.FILES or None,queryset=attachments)
+    if form.is_valid() and formset.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        formset.save(commit=False)
+        for _form in formset:
+            attachment_obj = _form.save(commit=False)
+            attachment_obj.product  = instance
+            attachment_obj.save()
+        return redirect(obj.get_manage_url())
+    context['form'] = form
+    context['formset'] = formset
+    return render(request, 'products/manager.html', context)
 
 def product_detail_view(request, handle=None):
     obj = get_object_or_404(Product, handle=handle)

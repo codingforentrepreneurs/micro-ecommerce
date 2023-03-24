@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<form  class='space-y-5' method="POST" action="." enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+    {{ form.as_p }}
+    </div>
+
+    <div>
+        {{ formset.management_form }}
+        <div class="pb-3 border-b space-y-3">
+            {% for form in formset %}
+            <div>
+                {{ form.as_p }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <button type="submit" class="btn-submit mt-2">Submit</button>
+</form>
+
+
+
+{% endblock %}
