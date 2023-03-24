@@ -44,9 +44,19 @@ def product_manage_detail_view(request, handle=None):
         instance.save()
         formset.save(commit=False)
         for _form in formset:
-            attachment_obj = _form.save(commit=False)
-            attachment_obj.product  = instance
-            attachment_obj.save()
+            is_delete = _form.cleaned_data.get("DELETE")
+            try:
+                attachment_obj = _form.save(commit=False)
+            except:
+                attachment_obj = None
+            if is_delete:
+                if attachment_obj is not None:
+                    if attachment_obj.pk:
+                        attachment_obj.delete()
+            else:
+                if attachment_obj is not None:
+                    attachment_obj.product  = instance
+                    attachment_obj.save()
         return redirect(obj.get_manage_url())
     context['form'] = form
     context['formset'] = formset
