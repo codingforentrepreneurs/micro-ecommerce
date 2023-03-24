@@ -14,6 +14,9 @@
         <p class="mb-3 font-light text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">Track work across the enterprise through an open, collaborative platform. Link issues across Jira and ingest data from other software development tools, so your IT support and operations teams have richer contextual information to rapidly respond to requests, incidents, and changes.</p>
         <p class="font-light text-gray-500 dark:text-gray-400">Deliver great service experiences fast - without the complexity of traditional ITSM solutions.Accelerate critical development work, eliminate toil, and deploy changes with ease, with a complete audit trail for every change.</p>
 
+
+        {% include 'products/attachments-table.html' with attachments=attachments is_owner=is_owner %}
+
     </div>
 
 
@@ -21,15 +24,19 @@
 
     <div class="w-full md:w-1/4 space-y-4">
         <!-- sidebar -->
+        {% if is_owner %}
+        <p>You own this product.</p>
+        {% else %}
+        <div>
+            <div class="flex items-baseline text-gray-900 dark:text-white">
+                <span class="text-3xl font-semibold">$</span>
+                <span class="text-5xl font-extrabold tracking-tight">49</span>
+                
+            </div>
 
-        <div class="flex items-baseline text-gray-900 dark:text-white">
-            <span class="text-3xl font-semibold">$</span>
-            <span class="text-5xl font-extrabold tracking-tight">49</span>
-            
+            <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy Now</button>
         </div>
-
-        <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Buy Now</button>
-
+        {% endif %}
         {% if object.image %}
             <div class="grid gap-4 ">
                 <div>
