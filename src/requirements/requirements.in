@@ -3,3 +3,4 @@ psycopg2
 dj-database-url
 python-decouple
 Pillow
+stripe
