@@ -22,6 +22,13 @@ class Product(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    @property
+    def display_name(self):
+        return self.name
+    
+    def __str__(self):
+        return self.display_name
+
     def save(self, *args, **kwargs):
         if self.price != self.og_price:
             # price changed

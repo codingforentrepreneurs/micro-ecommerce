@@ -68,7 +68,7 @@ def product_detail_view(request, handle=None):
     # attachments = obj.productattachment_set.all()
     is_owner = False
     if request.user.is_authenticated:
-        is_owner = True # verify ownership
+        is_owner = request.user.purchase_set.all().filter(product=obj, completed=True).exists()
     context = {"object": obj, "is_owner": is_owner, "attachments": attachments}
     return render(request, 'products/detail.html', context)
 
