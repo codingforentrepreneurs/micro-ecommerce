@@ -18,3 +18,9 @@ scripts:
     - mkdir -p src/static/vendor/flowbite/
     - curl -L https://unpkg.com/htmx.org@1.8.2 -o ./src/static/vendor/htmx/htmx.min.js
     - cp ./node_modules/flowbite/dist/flowbite.min.js ./src/static/vendor/flowbite/flowbite.min.js
+  build: docker build -f Dockerfile -t micro-ecommerce .
+  docker_dev: docker run --env-file .env-dev -p 8001:8000 --rm --name micro-ecommerce-dev -it micro-ecommerce
+  docker_prod: docker run --env-file .env-prod -p 8002:8000 --rm --name micro-ecommerce-prod -it micro-ecommerce
+  build_push: 
+    - docker build --platform=linux/amd64 -f Dockerfile -t codingforentrepreneurs/micro-ecommerce .
+    - docker push codingforentrepreneurs/micro-ecommerce --all-tags

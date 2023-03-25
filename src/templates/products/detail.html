@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="flex flex-col md:flex-row">
+
+    <div class="w-full md:w-3/4 space-y-4">
+        <!-- main content-->
+        <h2 class="text-4xl font-bold dark:text-white">{{ object.name }}</h2>
+
+
+
+        <p class="mb-3 font-light text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">Track work across the enterprise through an open, collaborative platform. Link issues across Jira and ingest data from other software development tools, so your IT support and operations teams have richer contextual information to rapidly respond to requests, incidents, and changes.</p>
+        <p class="font-light text-gray-500 dark:text-gray-400">Deliver great service experiences fast - without the complexity of traditional ITSM solutions.Accelerate critical development work, eliminate toil, and deploy changes with ease, with a complete audit trail for every change.</p>
+
+
+        {% include 'products/attachments-table.html' with attachments=attachments is_owner=is_owner %}
+
+    </div>
+
+
+
+
+    <div class="w-full md:w-1/4 space-y-4">
+        <!-- sidebar -->
+        {% if is_owner %}
+        <p>You own this product.</p>
+        {% else %}
+        <div>
+            {% include 'purchases/buy-btn-form.html' with product=object %}
+        </div>
+        {% endif %}
+        {% if object.image %}
+            <div class="grid gap-4 ">
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ object.image.url }}" alt="">
+                </div>
+            
+            </div>
+        {% endif %}
+
+
+
+        {% if form %}
+        <div>
+            <h3>Update Product</h3>
+            <form method="POST" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn-submit mt-2">Submit</button>
+            </form>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
