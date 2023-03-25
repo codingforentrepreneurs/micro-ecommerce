@@ -10,7 +10,7 @@ from cfehome.env import config
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", default=None)
 stripe.api_key = STRIPE_SECRET_KEY
 
-BASE_ENDPOINT="http://127.0.0.1:8000"
+BASE_ENDPOINT= config("BASE_ENDPOINT", default="http://127.0.0.1:8000")
 
 def purchase_start_view(request):
     if not request.method == "POST":
