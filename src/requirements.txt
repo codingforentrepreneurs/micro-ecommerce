@@ -25,6 +25,8 @@ django==4.1.7
     #   django-storages
 django-storages==1.13.2
     # via -r src/requirements/requirements.in
+gunicorn==20.1.0
+    # via -r src/requirements/requirements.in
 idna==3.4
     # via requests
 jmespath==1.0.1
@@ -53,3 +55,6 @@ urllib3==1.26.15
     # via
     #   botocore
     #   requests
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
