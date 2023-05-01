@@ -1,30 +1,72 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 
 {% block content %}
 
-<div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
-    {% if product.image %}
-    <a href="{{product.get_absolute_url}}">
-        <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/sofia-mcguire.png" alt="Sofia Avatar">
-    </a>
-    {% endif %}
-    <div class="p-5">
-        <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-            <a href="{{product.get_absolute_url}}">{{product.name}}</a>
-        </h3>
-        <span class="text-gray-500 dark:text-gray-400">${{product.price}}</span>
-        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">{{product.descriptions}}</p>
-        <div class="flex items-center justify-between">
-            <span class="text-xl font-bold text-gray-900 dark:text-white">${{product.price}}</span>
-            <a href="{{product.get_absolute_url}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">View</a>
-        </div>
+<div class="flex flex-col md:flex-row">
+
+    <div class="w-full md:w-3/4 space-y-4">
+        <!-- main content-->
+        <h2 class="text-4xl font-bold dark:text-white">{{ object.name }}</h2>
+
+
+
+        <p class="mb-3 font-light text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">{{product.descriptions}}</p>
+        <p class="font-light text-gray-500 dark:text-gray-400">Deliver great service experiences fast - without the complexity of traditional ITSM solutions.Accelerate critical development work, eliminate toil, and deploy changes with ease, with a complete audit trail for every change.</p>
+
     </div>
+
+
+
+
+    <div class="w-full md:w-1/4 space-y-4">
+        <!-- sidebar -->
+
+        <div class="flex items-baseline text-gray-900 dark:text-white">
+            <span class="text-3xl font-semibold">$</span>
+            <span class="text-5xl font-extrabold tracking-tight">{{product.price}}</span>
+            
+        </div>
+
+        <button type="button" class="btn-submit">Buy Now</button>
+
+        <div class="grid gap-4 ">
+            <div>
+                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
+            </div>
+            <div class="grid grid-cols-5 gap-4">
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
+                </div>
+            </div>
+        </div>
+
+        {% if form %}
+        <div>
+            <h3 class="text-xl font-bold dark:text-white">Update Product</h3>
+            <form method="POST" action="." class="dark:text-white">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn-submit mt-2">Update</button>
+            </form>
+        </div>
+        {% endif %}
+
+    </div>
+
 </div>
 
-<!-- formulario para actualizar el producto -->
-<form method="post" action="{% url 'products:product_update' product.handle %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Guardar cambios</button>
-  </form>
 {% endblock %}

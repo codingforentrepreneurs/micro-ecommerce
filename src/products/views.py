@@ -16,7 +16,7 @@ class ProductListView(ListView):
     template_name = 'products/list.html'
     context_object_name = 'products'
 
-class ProductDetailView(LoginRequiredMixin, DetailView):
+class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/detail.html'
     context_object_name = 'product'
@@ -34,30 +34,14 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     # template_name = 'products/update.html'
     form_class = ProductForm
     slug_field = 'handle'
-
+    
     def get_success_url(self):
-        # return reverse('products:product_detail', kwargs={'handle': self.object.handle})
-        return reverse('products:product_list_class')
+        return reverse_lazy('products:product_detail', kwargs={'slug': self.object.handle})
 
     def form_valid(self, form):
         if self.object.user == self.request.user:
             form.save()
         return super().form_valid(form)
-
-def product_detail_view(request, handle=None):
-    obj = get_object_or_404(Product, handle=handle)
-    is_owner = False
-    if request.user.is_authenticated:
-        is_owner = obj.user == request.user
-    context = {"object": obj}
-    if is_owner:
-        form = ProductForm(request.POST or None, instance=obj)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.save()
-            # return redirect('/products/create/')
-        context['form'] = form
-    return render(request, 'products/detail.html', context)
     
 class ProductCreateView(CreateView):
     model = Product
