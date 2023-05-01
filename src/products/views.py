@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404, render, redirect
 
 # Create your views here.
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.core.cache import cache
 from .models import Product
 from .forms import ProductForm
@@ -22,20 +22,27 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'product'
     slug_field = 'handle'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     if self.object.user == self.request.user:
-    #         form = ProductForm(instance=self.object)
-    #         context['form'] = form
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.object.user == self.request.user:
+            form = ProductForm(instance=self.object)
+            context['form'] = form
+        return context
 
-    # def post(self, request):
-    #     self.object = self.get_object()
-    #     if self.object.user == request.user:
-    #         form = ProductForm(request.POST, instance=self.object)
-    #         if form.is_valid():
-    #             form.save()
-    #     return self.render_to_response(self.get_context_data())
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    # template_name = 'products/update.html'
+    form_class = ProductForm
+    slug_field = 'handle'
+
+    def get_success_url(self):
+        # return reverse('products:product_detail', kwargs={'handle': self.object.handle})
+        return reverse('products:product_list_class')
+
+    def form_valid(self, form):
+        if self.object.user == self.request.user:
+            form.save()
+        return super().form_valid(form)
 
 def product_detail_view(request, handle=None):
     obj = get_object_or_404(Product, handle=handle)
