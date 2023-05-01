@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
+    {% if product.image %}
+    <a href="{{product.get_absolute_url}}">
+        <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/sofia-mcguire.png" alt="Sofia Avatar">
+    </a>
+    {% endif %}
+    <div class="p-5">
+        <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <a href="{{product.get_absolute_url}}">{{product.name}}</a>
+        </h3>
+        <span class="text-gray-500 dark:text-gray-400">${{product.price}}</span>
+        <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">{{product.descriptions}}</p>
+        <div class="flex items-center justify-between">
+            <span class="text-xl font-bold text-gray-900 dark:text-white">${{product.price}}</span>
+            <a href="{{product.get_absolute_url}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">View</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

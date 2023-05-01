@@ -12,12 +12,17 @@ django==4.1.8
     # via
     #   -r src/requirements/requirements.in
     #   dj-database-url
+    #   django-debug-toolbar
+django-debug-toolbar==4.0.0
+    # via -r src/requirements/requirements.in
 psycopg2==2.9.6
     # via -r src/requirements/requirements.in
 python-decouple==3.8
     # via -r src/requirements/requirements.in
 sqlparse==0.4.4
-    # via django
+    # via
+    #   django
+    #   django-debug-toolbar
 typing-extensions==4.5.0
     # via dj-database-url
 tzdata==2023.3
