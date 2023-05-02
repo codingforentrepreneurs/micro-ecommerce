@@ -8,6 +8,7 @@ from django.utils.text import slugify
 class Product(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
     # stripe_product_id =
+    image = models.ImageField(upload_to="products/",blank=True, null=True)
     name = models.CharField(max_length=255)
     descriptions = models.TextField(blank=True, null=True, max_length=255)
     handle = models.SlugField(unique=True)

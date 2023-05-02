@@ -1,7 +1,7 @@
 <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
     {% if product.image %}
     <a href="{{product.get_absolute_url}}">
-        <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/sofia-mcguire.png" alt="Sofia Avatar">
+        <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{product.image.url}}" alt="product.name">
     </a>
     {% endif %}
     <div class="p-5">

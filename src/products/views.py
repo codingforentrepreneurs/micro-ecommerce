@@ -1,7 +1,7 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import  render, redirect
 
 # Create your views here.
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
@@ -9,7 +9,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.core.cache import cache
 from .models import Product
-from .forms import ProductForm
+from .forms import ProductForm, ProductUpdateForm
 
 class ProductListView(ListView):
     model = Product
@@ -25,14 +25,14 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.object.user == self.request.user:
-            form = ProductForm(instance=self.object)
+            form = ProductUpdateForm(instance=self.object)
             context['form'] = form
         return context
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     # template_name = 'products/update.html'
-    form_class = ProductForm
+    form_class = ProductUpdateForm
     slug_field = 'handle'
     
     def get_success_url(self):
