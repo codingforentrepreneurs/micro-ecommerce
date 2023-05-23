@@ -7,28 +7,31 @@
     <div class="w-full md:w-3/4 space-y-4">
         <!-- main content-->
         <h2 class="text-4xl font-bold dark:text-white">{{ object.name }}</h2>
-
-
+        <h4 class="text-xl font-bold dark:text-white">Es dueno = {{is_owner}}</h4>
 
         <p class="mb-3 font-light text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">{{product.descriptions}}</p>
         <p class="font-light text-gray-500 dark:text-gray-400">Deliver great service experiences fast - without the complexity of traditional ITSM solutions.Accelerate critical development work, eliminate toil, and deploy changes with ease, with a complete audit trail for every change.</p>
 
+        {% include 'products/attachment-table.html' with attachments=attachments is_owner=is_owner%}
     </div>
-
-
-
+    
 
     <div class="w-full md:w-1/4 space-y-4">
         <!-- sidebar -->
-
-        <div class="flex items-baseline text-gray-900 dark:text-white">
-            <span class="text-3xl font-semibold">$</span>
-            <span class="text-5xl font-extrabold tracking-tight">{{product.price}}</span>
+        {% if is_owner %}
+            <h4 class="text-xl font-bold dark:text-white">You owner this product</h4>  
+        {% else %}
+        <div class="">
+            <div class="flex items-baseline text-gray-900 dark:text-white">
+                <span class="text-3xl font-semibold">$</span>
+                <span class="text-5xl font-extrabold tracking-tight">{{product.price}}</span>
+                
+            </div>
             
+            <button type="button" class="btn-submit">Buy Now</button>
         </div>
-
-        <button type="button" class="btn-submit">Buy Now</button>
-
+        {% endif %}
+        
         <div class="grid gap-4 ">
             {% if product.image %}
             <div>
@@ -38,7 +41,7 @@
             </div>
             {% endif %}
         </div>
-
+        
         {% if form %}
         <div>
             <h3 class="text-xl font-bold dark:text-white">Update Product</h3>

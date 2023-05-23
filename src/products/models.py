@@ -1,3 +1,4 @@
+import pathlib
 from django.utils import timezone
 from django.conf import settings
 from django.db import models
@@ -27,6 +28,9 @@ class Product(models.Model):
     
     def get_absolute_url(self):
         return reverse('products:product_detail', args=[str(self.handle)])
+        
+    def get_manage_url(self):
+        return reverse("products:product_manage", kwargs={"handle": self.handle})
 
     def save(self, *args, **kwargs):
         if self.price != self.og_price:
@@ -37,7 +41,9 @@ class Product(models.Model):
             self.price_changed_timestamp = timezone.now()
         
         # Si el objeto no tiene un slug o el nombre ha cambiado, crea uno nuevo
-        if not self.handle or self.name != self.handle:
+            # if not self.handle or self.name != self.handle:
+        # Si el objeto no tiene un slug
+        if not self.handle:
             self.handle = slugify(self.name)
         # Verifica si el slug ya existe en la base de datos
         if Product.objects.filter(handle=self.handle).exists():
@@ -58,7 +64,22 @@ class ProductAttachment(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     file = models.FileField(upload_to=handle_product_attachment_upload,
         storage=protected_storage)
+    name = models.CharField(max_length=120, blank=True, null=True)
     is_free = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        print(f"{self.file.name}")
+        if not self.name or self.name != pathlib.Path(self.file.name).name:
+            self.name = pathlib.Path(self.file.name).name
+            
+        super().save(*args, **kwargs)
+        
+    @property
+    def display_name(self):
+        return self.name or pathlib.Path(self.file.name).name
+        
+    def get_download_url(self):
+        return reverse('products:download', kwargs={"handle": self.product.handle, "pk": self.pk})
