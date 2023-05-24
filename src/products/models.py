@@ -71,8 +71,7 @@ class ProductAttachment(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        print(f"{self.file.name}")
-        if not self.name or self.name != pathlib.Path(self.file.name).name:
+        if not self.name:
             self.name = pathlib.Path(self.file.name).name
             
         super().save(*args, **kwargs)
