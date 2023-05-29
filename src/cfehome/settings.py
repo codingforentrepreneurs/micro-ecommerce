@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     "debug_toolbar",
-    'products'
+    #internal
+    'products',
+    'purchases'
 ]
 
 MIDDLEWARE = [

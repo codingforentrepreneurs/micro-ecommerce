@@ -4,3 +4,4 @@ dj-database-url
 python-decouple
 django-debug-toolbar
 Pillow
+stripe

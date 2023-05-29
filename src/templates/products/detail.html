@@ -22,13 +22,7 @@
             <h4 class="text-xl font-bold dark:text-white">You owner this product</h4>  
         {% else %}
         <div class="">
-            <div class="flex items-baseline text-gray-900 dark:text-white">
-                <span class="text-3xl font-semibold">$</span>
-                <span class="text-5xl font-extrabold tracking-tight">{{product.price}}</span>
-                
-            </div>
-            
-            <button type="button" class="btn-submit">Buy Now</button>
+            {% include 'purchases/buy-btn-form.html' with product=product %}
         </div>
         {% endif %}
         

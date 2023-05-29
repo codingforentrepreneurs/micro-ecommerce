@@ -111,7 +111,8 @@ class ProductDetailView(DetailView):
         attachments = ProductAttachment.objects.filter(product=obj)
         is_owner = False
         if self.request.user.is_authenticated:
-            is_owner = True  # verify ownership
+            # is_owner = True
+            is_owner = self.request.user.purchase_set.all().filter(product=obj, completed=True).exists()
         context["is_owner"] = is_owner
         context["attachments"] = attachments
         return context
