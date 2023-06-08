@@ -4,6 +4,8 @@ import stripe
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.core.cache import cache
+
 
 from products.models import Product
 from .models import Purchase
@@ -32,8 +34,10 @@ def purchase_start_view(request):
     if stripe_price_id is None:
         return HttpResponseBadRequest()
     purchase = Purchase.objects.create(user=request.user, product=obj)
-    request.session['purchase_id'] = purchase.id
-    
+    # Almacena el ID de compra en la caché
+    purchase_id = purchase.id
+    cache.set('purchase_id', purchase_id, timeout=None)
+
     success_path = reverse("purchases:success")
     if not success_path.startswith("/"):
         success_path = f"/{success_path}"
@@ -59,14 +63,18 @@ def purchase_start_view(request):
     purchase.save()
     return HttpResponseRedirect(checkout_session.url)
     
-
 def purchase_success_view(request):
-    purchase_id = request.session.get('purchase_id')
+    purchase_id = cache.get('purchase_id')  # Recupera el ID de compra almacenado en la caché
     if purchase_id:
         purchase = Purchase.objects.get(id=purchase_id)
+        # Marcar la compra como completada y realizar cualquier otra acción necesaria
         purchase.completed = True
         purchase.save()
-    return HttpResponse(f"Finished {purchase_id}")
+        cache.delete('purchase_id')  # Elimina el ID de compra de la caché
+        return HttpResponseRedirect(purchase.product.get_absolute_url())
+        return HttpResponse(f"Compra exitosa. ID de compra: {purchase_id}")
+    else:
+        return HttpResponseBadRequest()
     
 def purchase_stopped_view(request):
     return HttpResponse("Stopped")

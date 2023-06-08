@@ -5,3 +5,4 @@ python-decouple
 django-debug-toolbar
 Pillow
 stripe
+django-storages

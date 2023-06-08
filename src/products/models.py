@@ -41,12 +41,26 @@ class Product(models.Model):
         
     def get_manage_url(self):
         return reverse("products:product_manage", kwargs={"handle": self.handle})
+        
+    @property
+    def display_name(self):
+        return self.name
+    
+    @property
+    def display_price(self):
+        return self.price
 
     def save(self, *args, **kwargs):
         if self.name:
             stripe_product_r = stripe.Product.create(name=self.name)
             self.stripe_product_id = stripe_product_r.id
-    
+        if not self.stripe_price_id:
+            stripe_price_obj = stripe.Price.create(
+                product= self.stripe_product_id,
+                unit_amount=self.stripe_price,
+                currency="usd"
+            )
+            self.stripe_price_id = stripe_price_obj.id
         if self.price != self.og_price:
             #price_changed
             self.og_price = self.price

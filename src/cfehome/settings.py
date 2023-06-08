@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     #internal
     'products',
-    'purchases'
+    'purchases',
 ]
 
 MIDDLEWARE = [
