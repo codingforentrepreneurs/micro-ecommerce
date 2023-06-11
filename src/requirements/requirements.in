@@ -1,1 +1,9 @@
 Django>4.1,<4.2
+psycopg2
+dj-database-url
+python-decouple
+django-debug-toolbar
+Pillow
+stripe
+django-storages
+boto3

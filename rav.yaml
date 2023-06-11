@@ -1,5 +1,6 @@
 scripts:
   server: cd src && python manage.py runserver
+  make: cd src && python manage.py makemigrations
   migrate: cd src && python manage.py migrate
   freeze: venv/bin/python -m pip freeze
   watch: npx tailwindcss -i ./src/static/tailwind/tailwind-input.css -o ./src/static/css/output.css --watch
@@ -13,8 +14,8 @@ scripts:
     - npm install
   win_freeze: python -m pip freeze
   vendor_pull:
-    - rm -rf src/static/vendor
-    - mkdir -p src/static/vendor/htmx/
-    - mkdir -p src/static/vendor/flowbite/
-    - curl -L https://unpkg.com/htmx.org@1.8.2 -o ./src/static/vendor/htmx/htmx.min.js
-    - cp ./node_modules/flowbite/dist/flowbite.min.js ./src/static/vendor/flowbite/flowbite.min.js
+    - del /s /q src\static\vendor
+    - mkdir src\static\vendor\htmx
+    - mkdir src\static\vendor\flowbite
+    - powershell -command "& { (New-Object System.Net.WebClient).DownloadFile('https://unpkg.com/htmx.org@1.8.2', './src/static/vendor/htmx/htmx.min.js') }"
+    - copy node_modules\flowbite\dist\flowbite.min.js src\static\vendor\flowbite\flowbite.min.js
