@@ -6,3 +6,4 @@ django-debug-toolbar
 Pillow
 stripe
 django-storages
+boto3

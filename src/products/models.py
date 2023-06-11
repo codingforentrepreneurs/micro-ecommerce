@@ -8,6 +8,7 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import reverse
 from django.utils.text import slugify
 
+from cfehome.storages.backends import ProtectedFileStorage
 from cfehome.env import config
 
 # Obtener la clave secreta de Stripe desde la configuración del entorno
@@ -18,7 +19,7 @@ stripe.api_key = STRIPE_SECRET_KEY
 
 # Esto es importante para aplicaciones que manejan archivos confidenciales o de propiedad exclusiva
 PROTECTED_MEDIA_ROOT = settings.PROTECTED_MEDIA_ROOT
-protected_storage = FileSystemStorage(location=str(PROTECTED_MEDIA_ROOT))
+protected_storage = ProtectedFileStorage() #FileSystemStorage(location=str(PROTECTED_MEDIA_ROOT))
 
 # Create your models here.
 class Product(models.Model):
