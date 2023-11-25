@@ -1,0 +1,56 @@
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "stripe_product_id": "prod_P4Yn4mjNEXLXzX",
+        "image": "products/smartphone_case_2.png",
+        "name": "Phone Case",
+        "handle": "phone-case",
+        "price": "9.99",
+        "og_price": "9.99",
+        "stripe_price_id": "price_1OGPbOKZAbIjz2HA0NaZCSD9",
+        "stripe_price": 999,
+        "price_changed_timestamp": null,
+        "timestamp": "2023-11-25T17:25:10.409Z",
+        "updated": "2023-11-25T17:29:24.634Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "stripe_product_id": "prod_P4Ym5aZhLY0qkq",
+        "image": "products/laptop_case_3.png",
+        "name": "Laptop Case",
+        "handle": "laptop-case",
+        "price": "29.98",
+        "og_price": "29.98",
+        "stripe_price_id": "price_1OGPcCKZAbIjz2HAj3NMHEYf",
+        "stripe_price": 2998,
+        "price_changed_timestamp": "2023-11-25T17:26:00Z",
+        "timestamp": "2023-11-25T17:26:00.974Z",
+        "updated": "2023-11-25T17:29:06.182Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "stripe_product_id": "prod_P4YnOCSdJ8vsuf",
+        "image": "products/smartphone_case_1.png",
+        "name": "Phone Case 1",
+        "handle": "phone-case-1",
+        "price": "19.99",
+        "og_price": "19.99",
+        "stripe_price_id": "price_1OGPg2KZAbIjz2HAObs5gT84",
+        "stripe_price": 1999,
+        "price_changed_timestamp": null,
+        "timestamp": "2023-11-25T17:29:59.847Z",
+        "updated": "2023-11-25T17:29:59.847Z"
+    }
+}
+]

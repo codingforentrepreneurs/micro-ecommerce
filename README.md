@@ -23,6 +23,33 @@ cd micro-ecommerce
 git checkout start
 ```
 
+### Create dotenv file:
+
+Run `echo "" > .env` to create the `.env` in the root of your project:
+
+```bash
+DATABASE_URL=""
+DJANGO_SECRET_KEY=<some-secret>
+DJANGO_DEBUG=1
+ALLOWED_HOST="*"
+```
+Replace `<some-secret>` by any of the following commands:
+
+```bash
+openssl rand -base64 32
+```
+
+```bash
+python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+```
+
+```bash
+python -c 'import secrets;print(secrets.token_urlsafe(32))'
+```
+
+
+=== Configure Environment
+
 To install packages and run various command shortcuts, we use [rav](https://github.com/jmitchel3/rav). Open `rav.yaml` to see the various commands available if you prefer to not use `rav`.
 
 _macOS/Linux Users_
@@ -33,6 +60,11 @@ venv/bin/python -m pip install pip pip-tools rav --upgrade
 venv/bin/rav run installs
 rav run freeze
 ```
+In `rav.yaml`, you'll see that `rav run installs` maps to:
+
+- `venv/bin/pip-compile src/requirements/requirements.in -o src/requirements.txt`
+- `venv/bin/python -m pip install -r src/requirements.txt`
+- `npm install`
 
 
 _Windows Users_
@@ -43,6 +75,14 @@ python -m pip install pip pip-tools rav --upgrade
 rav run win_installs
 rav run win_freeze
 ```
+In `rav.yaml`, you'll see that `rav run win_installs` maps to:
+
+- `pip-compile src/requirements/requirements.in -o src/requirements.txt`
+- `python -m pip install -r src/requirements.txt`
+- `npm install`
+
+
+=== Main Commands
 
 With all the configuration done, here are the main commands you'll run:
 
@@ -53,5 +93,5 @@ rav run vendor_pull
 ```
 
 - `rav run server` maps to `python manage.py runserver` in the `src` folder
-- `rav run watch` triggers tailwind to watch the `tailwind-input.css` to output the `output.css` styles file.
-- `rav run vendor_pull`
+- `rav run watch` triggers tailwind to watch the tailwind input file to make the compiled tailwind output file via `npx tailwindcss -i <input-path> -o <output-path> --watch`
+- `rav run vendor_pull` run this occasionally to pull the latest version of Flowbite, HTMX, and any other third party static vendor files you need.
