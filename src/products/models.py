@@ -3,7 +3,6 @@ import stripe
 
 
 from django.db import models
-from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
@@ -108,6 +107,8 @@ class ProductAttachment(models.Model):
         return self.name or pathlib.Path(self.file.name).name
 
     def get_download_url(self):
-        return reverse(
-            "products:download", kwargs={"handle": self.product.handle, "pk": self.pk}
-        )
+        url_kwargs = {
+            "handle": self.product.handle,
+            "pk": self.pk,
+        }
+        return reverse("products:download", kwargs=url_kwargs)
