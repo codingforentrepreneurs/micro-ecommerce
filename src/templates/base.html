@@ -13,15 +13,18 @@
 </head>
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-
+  
     {% include 'base/navbar.html' %}
+  
+   
+    <section class="bg-grey dark:bg-gray-900 bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern.svg')] dark:bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/hero-pattern-dark.svg')]">
 
     <div class="container mx-auto mt-4 min-h-screen">
        
         {% block content %}
         {% endblock content %}
     </div>
-
+    </section>
     {% include 'base/footer.html' %}
     {% include 'base/js.html' %}
      

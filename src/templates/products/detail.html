@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block content %}
+<div class="flex flex-col md:flex-row">
+  <div class="w-full md:w-3/4 space-y-4">
+    <!-- main content -->
+    <h2 class="text-4xl font-bold dark:text-white">{{obj.name}}</h2>
+
+    <p class="para">
+      Track work across the enterprise through an open, collaborative platform.
+      Link issues across Jira and ingest data from other software development
+      tools, so your IT support and operations teams have richer contextual
+      information to rapidly respond to requests, incidents, and changes.
+    </p>
+    <p class="text-gray-500 dark:text-gray-400">
+      Deliver great service experiences fast - without the complexity of
+      traditional ITSM solutions.Accelerate critical development work, eliminate
+      toil, and deploy changes with ease, with a complete audit trail for every
+      change.
+    </p>
+    {% include 'products/attachment_table.html' with attachments=attachments is_owner=is_owner %}
+    
+  </div>
+
+  <!-- </div> -->
+  <div class="w-full md:w-1/4 space-y-4">
+    <!-- sidebar view -->
+    {% if is_owner %}
+    <p>You are Owner</p>
+    {% else %}
+    <div>
+      {% include 'purchases/buy-btn-form.html' with product=obj %}
+    </div>
+    {% endif %} {% if obj.image %}
+    <div class="grid gap-4">
+      <div>
+        <img
+          class="h-auto max-w-full rounded-lg"
+          src="{{obj.image.url}}"
+          alt=""
+        />
+      </div>
+    </div>
+    {% endif %} {% if form %}
+    <div class="">
+      <h3>Update Product</h3>
+      <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <ul>
+          {{form.as_ul}}
+        </ul>
+        <br />
+        <button type="submit" class="btn-submit">Update</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

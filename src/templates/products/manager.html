@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% block content %}
+<form class="space-y-5" method="POST" action="." enctype="multipart/form-data">
+  {% csrf_token %}
+  <div>
+    <ul>
+      {{form.as_ul}}
+    </ul>
+  </div>
+  <div>
+    {{formset.management_form}}
+    <div class="pb-3 border-b space-y-3" id="attachments">
+      {% for form in formset %}
+      <div>
+        <ul>
+          {{ form.as_ul}}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <button class="btn-submit mt-2" id="add-attachment-btn" name="add_formset">Add Attachment</button>
+  <button type="submit" name="remove_formset">Remove Last Attachment</button>
+  <!-- <button class="btn-submit mt-2" id="btn-delete">Delete Attachment</button> -->
+  <button type="submit" class="btn-submit">Submit</button>
+</form>
+  <div class="hidden" id="blank-form">
+    {{ formset.empty_form}}
+ </div>
+
+ <script>
+  const blankFormEl = document.querySelector("#blank-form");
+  const attachmentContainer = document.querySelector("#attachments");
+  const addAttachmentBtn = document.querySelector("#add-attachment-btn");
+  const managementFormInputEl = document.querySelector("#id_form-TOTAL_FORMS");
+
+  function cloneBlankForm() {
+      if (blankFormEl) {
+          const newBlankForm = blankFormEl.cloneNode(true);
+          const totalFormValue = parseInt(managementFormInputEl.value);
+          var formRegx = new RegExp('__prefix__', 'g');
+          newBlankForm.innerHTML = newBlankForm.innerHTML.replace(formRegx, totalFormValue);
+          managementFormInputEl.value = totalFormValue + 1;
+          newBlankForm.classList.add('attachment-form');
+          newBlankForm.classList.remove('hidden');
+          newBlankForm.removeAttribute('id');
+          return newBlankForm;
+      }
+  }
+
+  function handleAttachmentBtnClick(event) {
+      if (event) {
+          event.preventDefault();
+      }
+      const newForm = cloneBlankForm();
+      attachmentContainer.appendChild(newForm);
+  }
+
+  addAttachmentBtn.addEventListener("click", handleAttachmentBtnClick);
+
+  
+    // ... your existing script ...
+
+    // function handleAttachmentBtnClick(event) {
+    //     if (event) {
+    //         event.preventDefault();
+    //     }
+    //     const newForm = cloneBlankForm();
+    //     attachmentContainer.appendChild(newForm);
+    //     attachDeleteButton(newForm);
+    // }
+
+    // function attachDeleteButton(form) {
+    //     const deleteBtn = form.querySelector('#btn-delete');
+    //     if (deleteBtn) {
+    //         deleteBtn.addEventListener('click', handleDeleteBtnClick);
+    //     }
+    // }
+
+    // function handleDeleteBtnClick(event) {
+    //     const attachmentForm = event.currentTarget.closest('.attachment-form');
+    //     if (attachmentForm) {
+    //         attachmentForm.remove();
+    //     }
+    // }
+
+    // addAttachmentBtn.addEventListener('click', handleAttachmentBtnClick);
+
+    // // Attach delete button to existing forms
+    // document.querySelectorAll('.attachment-form').forEach(form => {
+    //     attachDeleteButton(form);
+    // });
+
+
+</script>
+
+
+{% endblock %}

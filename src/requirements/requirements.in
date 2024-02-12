@@ -1,1 +1,8 @@
 Django>4.1,<4.2
+psycopg2
+dj-database-url
+python-decouple
+pillow
+stripe
+gunicorn
+psycopg2-binary
